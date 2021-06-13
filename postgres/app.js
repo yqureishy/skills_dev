@@ -14,12 +14,12 @@ const connectionString = 'postgres://localhost:5432/interviewdb'
 const db = pgp(connectionString)
 
 app.get('/', (req,res)=>{
-    res.render('post_blogs')
+    res.render('create_posts')
 })
 
 app.post('/', (req,res)=>{
     const title = req.body.title
-    const isPublished = req.body.isPublished == "ON" ? TRUE : false
+    const isPublished = req.body.isPublished == "on" ? true : false
     const body = req.body.body
 
     db.none('INSERT INTO blogs (title, is_published, body) VALUES ($1,$2,$3)', [title, isPublished, body])
@@ -28,6 +28,13 @@ app.post('/', (req,res)=>{
     })
     .catch((err)=>{
         console.log(err)
+    })
+})
+
+app.get('/view_posts',(req,res)=>{
+    db.any('SELECT * FROM blogs')
+    .then((posts)=>{
+        res.render('view_posts', {posts: posts})
     })
 })
 

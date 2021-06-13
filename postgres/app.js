@@ -14,7 +14,7 @@ const connectionString = 'postgres://localhost:5432/interviewdb'
 const db = pgp(connectionString)
 
 app.get('/', (req,res)=>{
-    res.render('blogs')
+    res.render('post_blogs')
 })
 
 app.post('/', (req,res)=>{

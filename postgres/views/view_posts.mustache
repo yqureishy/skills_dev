@@ -9,6 +9,13 @@ postID: {{post_id}} - Title: {{title}} - Published: {{is_published}}
     <input type='hidden' value={{post_id}} name='post_id' />
     <button> Delete </button>
 </form>
+
+<form method='POST' action='/update-post'>
+    <input type="hidden" value={{post_id}} name='postID' />
+    <button> Update </button>
+
+</form>
+
 <br>
 <br>
 {{/posts}}

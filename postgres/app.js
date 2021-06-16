@@ -52,6 +52,11 @@ app.post('/delete-post', (req,res)=>{
     })
 })
 
+app.post('/update-post', (req,res)=>{
+
+    res.send()
+})
+
 
 
 

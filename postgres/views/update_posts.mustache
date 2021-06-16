@@ -1,0 +1,22 @@
+<html>
+<header></header>
+<body>
+
+<h1> Update your post </h1>
+
+<form method='POST' action='/update-this-post'>
+<input type="hidden" value={{postID}} name="postID" />
+<input type='textbox' placeholder='title' name='title'/>
+<label for="published">Is Published</label>
+<input type='radio' id="published" name='isPublished' />
+<br>
+<textarea rows="20" cols="60" placeholder='Blog Body' name='body'></textarea>
+<br>
+<button type='submit'> Update </button>
+</form>
+
+
+
+
+</body>
+</html>

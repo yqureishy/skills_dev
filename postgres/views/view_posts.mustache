@@ -5,7 +5,13 @@ postID: {{post_id}} - Title: {{title}} - Published: {{is_published}}
 <li>
 {{body}}
 </li>
+<form method='POST' action='/delete-post'>
+    <input type='hidden' value={{post_id}} name='post_id' />
+    <button> Delete </button>
+</form>
+<br>
 <br>
 {{/posts}}
 
+<br>
 <a href="http://localhost:3000"> Create Post </a>

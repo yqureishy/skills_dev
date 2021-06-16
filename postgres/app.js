@@ -1,6 +1,7 @@
 const express = require('express')
 const mustacheExpress = require('mustache-express')
 const app = express()
+const { v4: uuidv4 } = require('uuid')
 const bodyParser = require('body-parser')
 const pgp = require('pg-promise')()
 
@@ -35,6 +36,19 @@ app.get('/view_posts',(req,res)=>{
     db.any('SELECT * FROM blogs')
     .then((posts)=>{
         res.render('view_posts', {posts: posts})
+    })
+})
+
+app.post('/delete-post', (req,res)=>{
+
+    const postID = req.body.post_id
+
+    db.none('DELETE FROM blogs where (post_id) = ($1)', [postID])
+    .then(()=>{
+        res.redirect('/view_posts')
+    })
+    .catch((err)=>{
+        console.log(err)
     })
 })
 

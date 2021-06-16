@@ -54,7 +54,25 @@ app.post('/delete-post', (req,res)=>{
 
 app.post('/update-post', (req,res)=>{
 
-    res.send()
+    const postID = req.body.postID
+
+    res.render('update_posts',{postID: postID})
+
+})
+
+app.post('/update-this-post', (req,res)=>{
+    const Title = req.body.title
+    const isPublished = req.body.isPublished == 'on' ? true : false
+    const Body = req.body.body
+    const postID = req.body.postID
+
+    db.none('UPDATE blogs SET title=$1, is_published=$2, body=$3 where post_id=$4', [Title,isPublished,Body,postID])
+    .then(() =>{
+        res.redirect('/view_posts')
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
 })
 
 

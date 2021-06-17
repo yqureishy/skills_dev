@@ -36,6 +36,10 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
+app.get('/register', (req,res)=>{
+    res.render('register')
+})
+
 app.get('/view_posts',(req,res)=>{
     db.any('SELECT * FROM blogs')
     .then((posts)=>{

@@ -1,5 +1,6 @@
 const express = require('express')
 const mustacheExpress = require('mustache-express')
+const session = require('express-session')
 const app = express()
 const { v4: uuidv4 } = require('uuid')
 const bodyParser = require('body-parser')
@@ -10,6 +11,10 @@ app.set('views','./views')
 app.set('view engine', 'mustache')
 
 app.use(express.urlencoded({extended:false}))
+app.use(session({
+    secret: 'MYSECRETKEY',
+    saveUninitialized: true
+}))
 
 const connectionString = 'postgres://localhost:5432/interviewdb'
 const db = pgp(connectionString)

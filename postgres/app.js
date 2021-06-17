@@ -32,6 +32,10 @@ app.post('/', (req,res)=>{
     })
 })
 
+app.get('/login', (req,res)=>{
+    res.render('login')
+})
+
 app.get('/view_posts',(req,res)=>{
     db.any('SELECT * FROM blogs')
     .then((posts)=>{

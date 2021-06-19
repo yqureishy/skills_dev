@@ -58,7 +58,7 @@ app.post('/register', (req,res)=>{
     bcrypt.genSalt(10, function(error, salt){
         bcrypt.hash(password, salt, function(error, hash){
             if(!error){
-                db.none('INSERT INTO users (username, password) VALUES ($1,$2)', [username, password])
+                db.none('INSERT INTO users (username, password) VALUES ($1,$2)', [username, hash])
                     .then(() => {
                         res.redirect('/login')
                     })

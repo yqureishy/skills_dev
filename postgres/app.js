@@ -5,6 +5,7 @@ const app = express()
 const { v4: uuidv4 } = require('uuid')
 const bodyParser = require('body-parser')
 const pgp = require('pg-promise')()
+const bcrypt = require('bcryptjs')
 
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
@@ -48,6 +49,30 @@ app.get('/login', (req,res)=>{
 
 app.get('/register', (req,res)=>{
     res.render('register')
+})
+
+app.post('/register', (req,res)=>{
+    const username = req.body.username
+    const password = req.body.password
+
+    bcrypt.genSalt(10, function(error, salt){
+        bcrypt.hash(password, salt, function(error, hash){
+            if(!error){
+                db.none('INSERT INTO users (username, password) VALUES ($1,$2)', [username, hash])
+                    .then(() => {
+                        res.redirect('/login')
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+            else{
+                console.log(error)
+            }
+        })
+    })
+
+    
 })
 
 app.get('/view_posts',(req,res)=>{

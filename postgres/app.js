@@ -6,24 +6,29 @@ const { v4: uuidv4 } = require('uuid')
 const bodyParser = require('body-parser')
 const pgp = require('pg-promise')()
 
+app.use(express.urlencoded({ extended: false }))
+app.use(session({
+    secret: 'MYSECRETKEY',
+    resave: false,
+    saveUninitialized: true
+}))
+
 app.engine('mustache', mustacheExpress())
 app.set('views','./views')
 app.set('view engine', 'mustache')
-
-app.use(express.urlencoded({extended:false}))
-app.use(session({
-    secret: 'MYSECRETKEY',
-    saveUninitialized: true
-}))
 
 const connectionString = 'postgres://localhost:5432/interviewdb'
 const db = pgp(connectionString)
 
 app.get('/', (req,res)=>{
+    res.render('home')
+})
+
+app.get('/create_posts', (req,res)=>{
     res.render('create_posts')
 })
 
-app.post('/', (req,res)=>{
+app.post('/create_posts', (req,res)=>{
     const title = req.body.title
     const isPublished = req.body.isPublished == "on" ? true : false
     const body = req.body.body

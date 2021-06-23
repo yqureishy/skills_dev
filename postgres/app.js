@@ -47,6 +47,37 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
+app.post('/login', (req,res)=>{
+    const username = req.body.username
+    const password = req.body.password
+
+        db.one('SELECT * from users WHERE username=$1', [username])
+        .then((user)=>{
+                bcrypt.compare(password, user.password, function (err, result) {
+                    if(result == true){
+                            if(req.session){
+                                req.session.userID = user.user_id
+                                req.session.username = user.username
+
+                                console.log(req.session.userID)
+
+                               res.redirect('/profile') 
+                            }
+                        }
+                    else {
+                            res.render('login', {message: 'Incorrect Username or Password'})
+                        }
+                    }
+            
+                )
+            })
+        .catch((err)=>{
+            console.log(err)
+            res.send('Incorrect username/password. Please try again.')
+        })
+    
+})
+
 app.get('/register', (req,res)=>{
     res.render('register')
 })
@@ -73,6 +104,11 @@ app.post('/register', (req,res)=>{
     })
 
     
+})
+
+app.get('/profile', (req,res)=>{
+    const username = req.session.username
+    res.render('profile', {username: username})
 })
 
 app.get('/view_posts',(req,res)=>{

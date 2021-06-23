@@ -4,8 +4,11 @@ const session = require('express-session')
 const app = express()
 const { v4: uuidv4 } = require('uuid')
 const bodyParser = require('body-parser')
+const loginRouter = require('./routes/login')
+const registerRouter = require('./routes/register')
 const pgp = require('pg-promise')()
 const bcrypt = require('bcryptjs')
+
 
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
@@ -13,6 +16,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
+app.use('/login',loginRouter)
+app.use('/register', registerRouter)
 
 app.engine('mustache', mustacheExpress())
 app.set('views','./views')
@@ -41,69 +46,6 @@ app.post('/create_posts', (req,res)=>{
     .catch((err)=>{
         console.log(err)
     })
-})
-
-app.get('/login', (req,res)=>{
-    res.render('login')
-})
-
-app.post('/login', (req,res)=>{
-    const username = req.body.username
-    const password = req.body.password
-
-        db.one('SELECT * from users WHERE username=$1', [username])
-        .then((user)=>{
-                bcrypt.compare(password, user.password, function (err, result) {
-                    if(result == true){
-                            if(req.session){
-                                req.session.userID = user.user_id
-                                req.session.username = user.username
-
-                                console.log(req.session.userID)
-
-                               res.redirect('/profile') 
-                            }
-                        }
-                    else {
-                            res.render('login', {message: 'Incorrect Username or Password'})
-                        }
-                    }
-            
-                )
-            })
-        .catch((err)=>{
-            console.log(err)
-            res.send('Incorrect username/password. Please try again.')
-        })
-    
-})
-
-app.get('/register', (req,res)=>{
-    res.render('register')
-})
-
-app.post('/register', (req,res)=>{
-    const username = req.body.username
-    const password = req.body.password
-
-    bcrypt.genSalt(10, function(error, salt){
-        bcrypt.hash(password, salt, function(error, hash){
-            if(!error){
-                db.none('INSERT INTO users (username, password) VALUES ($1,$2)', [username, hash])
-                    .then(() => {
-                        res.redirect('/login')
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
-            }
-            else{
-                console.log(error)
-            }
-        })
-    })
-
-    
 })
 
 app.get('/profile', (req,res)=>{

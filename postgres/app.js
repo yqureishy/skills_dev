@@ -16,8 +16,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
-app.use('/login',loginRouter)
-app.use('/register', registerRouter)
+
 
 app.engine('mustache', mustacheExpress())
 app.set('views','./views')
@@ -26,22 +25,26 @@ app.set('view engine', 'mustache')
 const connectionString = 'postgres://localhost:5432/interviewdb'
 const db = pgp(connectionString)
 
+app.use('/login', loginRouter)
+app.use('/register', registerRouter)
+
 app.get('/', (req,res)=>{
     res.render('home')
 })
 
-app.get('/create_posts', (req,res)=>{
+app.get('/create-post', (req,res)=>{
     res.render('create_posts')
 })
 
-app.post('/create_posts', (req,res)=>{
+app.post('/create-post', (req,res)=>{
     const title = req.body.title
     const isPublished = req.body.isPublished == "on" ? true : false
     const body = req.body.body
+    const userID = req.session.userID
 
-    db.none('INSERT INTO blogs (title, is_published, body) VALUES ($1,$2,$3)', [title, isPublished, body])
+    db.none('INSERT INTO blogs (title, is_published, body, user_id) VALUES ($1,$2,$3,$4)', [title, isPublished, body, userID])
     .then(()=>{
-        res.redirect('/')
+        res.redirect('/profile')
     })
     .catch((err)=>{
         console.log(err)
@@ -53,8 +56,11 @@ app.get('/profile', (req,res)=>{
     res.render('profile', {username: username})
 })
 
-app.get('/view_posts',(req,res)=>{
-    db.any('SELECT * FROM blogs')
+app.get('/view-posts',(req,res)=>{
+
+    const userID = req.session.userID
+
+    db.any('SELECT * FROM blogs where user_id=$1', [userID])
     .then((posts)=>{
         res.render('view_posts', {posts: posts})
     })
@@ -66,7 +72,7 @@ app.post('/delete-post', (req,res)=>{
 
     db.none('DELETE FROM blogs where (post_id) = ($1)', [postID])
     .then(()=>{
-        res.redirect('/view_posts')
+        res.redirect('/view-posts')
     })
     .catch((err)=>{
         console.log(err)
@@ -89,7 +95,7 @@ app.post('/update-this-post', (req,res)=>{
 
     db.none('UPDATE blogs SET title=$1, is_published=$2, body=$3 where post_id=$4', [Title,isPublished,Body,postID])
     .then(() =>{
-        res.redirect('/view_posts')
+        res.redirect('/view-posts')
     })
     .catch((err)=>{
         console.log(err)

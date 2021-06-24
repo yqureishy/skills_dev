@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const pgp = require('pg-promise')()
-const connectionString = 'postgres://localhost:5432/interviewdb'
-const db = pgp(connectionString)
+const db = require('../config/connection')
 const bcrypt = require('bcryptjs')
 
 router.get('/register', (req, res) => {

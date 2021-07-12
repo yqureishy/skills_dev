@@ -10,15 +10,49 @@
 
 .container > .item{
     background-color: yellow;
+}
 
+.container2 {
+    display: grid;
+    grid-template-columns: 10% 50px 1fr;
+    grid-gap: 5px;
+    width: 300px
+}
+
+.container3 {
+    display: grid;
+    grid-template-columns: 3fr 2fr 1fr;
+    grid-template-rows: 3fr 2fr 1fr;
+    grid-gap: 5px;
+    width:300px;
 }
 
 .content {
     display: grid;
-    grid-template-columns: 100px 100px 100px;
+    grid-template-columns: 50px 50px 50px 50px 50px;
     grid-template-rows: 40px 40px;
+    background-color: gray;
     grid-gap: 5px;
-    background-color: blue;
     text-align: center;
-    width: 310px;
+    width: 270px
+}
+
+.content2{
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(2,40px);
+    background-color: black;
+    grid-gap: 5px;
+    width:fit-content;
+    
+}
+
+.content2 > .item {
+    background-color: orange;
+    text-align: center;
+}
+
+.item{
+    background-color: green;
+    text-align: center;
 }

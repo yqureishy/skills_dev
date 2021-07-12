@@ -1,0 +1,24 @@
+.container {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 40px 40px;
+    grid-gap: 5px;
+    background-color: brown;
+    text-align: center;
+    width: 310px;
+}
+
+.container > .item{
+    background-color: yellow;
+
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 40px 40px;
+    grid-gap: 5px;
+    background-color: blue;
+    text-align: center;
+    width: 310px;
+}

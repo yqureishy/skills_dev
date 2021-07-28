@@ -1,7 +1,40 @@
-.container {
+body {
+  margin: auto;
+}
+.menu {
   display: flex;
   flex-direction: row;
   background-color: black;
   color: white;
   justify-content: space-around;
+  padding: 10px 0;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(228, 228, 220);
+  padding: 12px 0px;
+  font: 14px;
+  text-align: center;
+}
+
+.message p {
+  margin: 0;
+}
+
+@media (max-width: 768px) and (min-width: 300px) {
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1068px) {
+  .message {
+    display: flex;
+    justify-content: center;
+    padding: 12px 20px;
+  }
 }

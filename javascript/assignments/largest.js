@@ -1,4 +1,4 @@
-myNums = [0, 3, 5, 34, 54, 6, 5, 55, 67, 43, 55, 22, -5, 43]
+exports.myNums = [0, 3, 5, 34, 54, 6, 5, 55, 67, 43, 55, 22, -5, 43]
 
 function largest(array) {
     let highest = 0

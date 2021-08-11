@@ -5,3 +5,13 @@
 .red {
   background-color: red;
 }
+
+.image {
+  display: flex;
+  justify-content: center;
+}
+
+ul > img {
+  width: 80px;
+  height: 80px;
+}

@@ -1,0 +1,28 @@
+.searchBar {
+  display: flex;
+  justify-content: center;
+}
+
+.allTasks {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+li {
+  display: flex;
+  border: 2px black solid;
+  padding: 20px 0px;
+  justify-content: space-between;
+}
+
+.pendingTaskUL {
+  display: flex;
+}
+
+.pendingTaskUL > li > button {
+  order: 2;
+}
+
+#text {
+  order: 2;
+}

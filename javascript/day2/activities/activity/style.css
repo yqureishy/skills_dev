@@ -64,3 +64,15 @@ li > button:hover {
   color: rgba(243, 239, 234, 0.966);
   margin-left: 5px;
 }
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .allTasks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  li {
+    margin: 5px 120px;
+  }
+}

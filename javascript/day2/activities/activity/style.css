@@ -8,21 +8,62 @@
   justify-content: space-evenly;
 }
 
+h1 {
+  text-align: center;
+  font-size: 25px;
+  color: gray;
+  font-weight: 500;
+}
+
+.liTask {
+  margin: 5px 0px;
+}
+
 li {
   display: flex;
-  border: 2px black solid;
-  padding: 20px 0px;
+  border: 2px black;
+  padding: 15px 0px;
   justify-content: space-between;
+  align-items: center;
+  background-color: rgba(25, 152, 220, 0.9);
 }
 
-.pendingTaskUL {
-  display: flex;
+li > * {
+  margin: auto 20px;
 }
 
-.pendingTaskUL > li > button {
-  order: 2;
+p {
+  color: antiquewhite;
+  font-size: 25px;
+  margin-right: 30px;
 }
 
-#text {
-  order: 2;
+li > input {
+  height: 25px;
+  width: 25px;
+  margin-left: 10px;
+  background-color: rgba(25, 152, 220, 0.9);
+  border: solid white 1px;
+}
+
+li > button {
+  background-color: rgba(25, 152, 220, 0);
+  border: none;
+  color: rgba(243, 239, 234, 0.966);
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+li > button:hover {
+  background-color: rgba(25, 152, 220, 0);
+  border: none;
+  color: rgba(243, 239, 234, 0.966);
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#buttonSubmit {
+  background-color: rgba(25, 152, 220, 0.9);
+  color: rgba(243, 239, 234, 0.966);
+  margin-left: 5px;
 }

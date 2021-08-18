@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.header {
+  display: flex;
+  background-color: #13b0db;
+  color: white;
+  margin: 20px 50px;
+}
+
+.home {
+  font-size: 30px;
+  padding-top: 10px;
+}
+
+.HOC {
+  font-size: 50px;
+}
+
+.categories {
+  font-weight: 300;
+  padding-top: 10px;
+}
+
+.header > h1 {
+  margin: 20px 50px;
+}

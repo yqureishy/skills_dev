@@ -1,13 +1,13 @@
 public class Shirt {
-    public static String color;
-    public static char size;
+    public String color;
+    public char size;
 
+    Shirt() {
+    }
 
-
-    Shirt() {}
-    Shirt(String newColor, char newSize) {
-        color = newColor;
-        size = newSize;
+    Shirt(String color, char size) {
+        this.color = color;
+        this.size = size;
     }
 
     public static void putOn() {
@@ -18,11 +18,11 @@ public class Shirt {
         System.out.println("Shirt is off");
     }
 
-    public static void setColor(String newColor){
-        color = newColor;
+    public void setColor(String newColor) {
+        this.color = newColor;
     }
 
-    public static void setSize(char newSize){
-        size = newSize;
+    public void setSize(char newSize) {
+        this.size = newSize;
     }
 }

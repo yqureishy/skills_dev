@@ -4,7 +4,7 @@ import Account from "./src/account.js"
 // const Account = require("./account.js")
 const input = ps({ sigint: true });
 
-import { mainMenu, newUser, printAccounts } from "./src/functions.js";
+import { mainMenu, newUser, printAccounts, login } from "./src/functions.js";
 
 
 
@@ -21,7 +21,7 @@ while (choice != 3) {
                 newUser()
                 printAccounts()
                 break;
-            case 2: console.log("You chose 2!");
+            case 2: login()
                 break;
             case 3: console.log("You chose 3!");
                 break;

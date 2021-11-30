@@ -19,11 +19,11 @@ export const login = () => {
     let correct = false;
     while (!correct) {
         let userId = input("UserId: ")
-        let password = input("Password: ")
+        let pin = input("pin: ")
         try {
             for (let i = 0; i < users.length; i++) {
                 if (users[i].userId.match(userId)) {
-                    if (users[i].password.match(password)) {
+                    if (users[i].pin.match(pin)) {
                         console.log("Welcome to your page " + users[i].name)
                         loggedInUser[0] = users[i];
                         break
@@ -47,11 +47,11 @@ export const newUser = () => {
 
     let userId = input("User Id: ")
 
-    let password = getPassword()
+    let pin = getPin()
 
     let deposit = getDeposit()
 
-    let account = new Account(name, address, phoneNumber, userId, password, deposit)
+    let account = new Account(name, address, phoneNumber, userId, pin, deposit)
 
     users.push(account);
 
@@ -59,18 +59,18 @@ export const newUser = () => {
 
 }
 
-var getPassword = function () {
+var getPin = function () {
     let correct = false;
-    let password;
+    let pin;
     while (!correct) {
-        password = input("Password: ")
-        if (!password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)) {
-            console.log(`Password must contain at least 6 characters, a number and a special character`)
+        pin = input("Pin: ")
+        if (!pin.match(/^\d{4}$/)) {
+            console.log(`Pin should be exactly 4 digits.  Please try again.`)
         } else {
             correct = true;
         }
     }
-    return password
+    return pin
 }
 
 

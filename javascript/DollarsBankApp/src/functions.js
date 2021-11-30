@@ -29,6 +29,8 @@ export const newUser = () => {
 
     let deposit = getDeposit()
 
+
+
     let account = new Account(name, address, phoneNumber, userId, password, deposit)
 
     users.push(account);
@@ -43,45 +45,70 @@ export const printAccounts = () => {
 
 }
 
-var getPassword = function () {
-    let password = input("Password: ")
 
-    if (!password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)) {
-        console.log(`Password must contain at least 6 characters, a number and a special character`)
-        getPassword()
+
+
+var getPassword = function () {
+    let correct = false;
+    let password;
+    while (!correct) {
+        password = input("Password: ")
+        if (!password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)) {
+            console.log(`Password must contain at least 6 characters, a number and a special character`)
+        } else {
+            correct = true;
+        }
     }
-    return password;
+    return password
 }
+
+
+
 
 var getName = function () {
-    let name = input("Customer Name: ")
-
-    if (name.search(/[^A-Za-z\s]/) != -1) {
-        console.log("Name must include letters only")
-        getName()
+    let correct = false;
+    let name;
+    while (!correct) {
+        name = input("Customer Name: ")
+        if (name.search(/[^A-Za-z\s]/) != -1) {
+            console.log("Name must include letters only")
+        } else {
+            correct = true;
+        }
     }
-    return name;
+    return name
 }
+
+
+
+
 
 var getPhoneNumber = function () {
-    let phoneNumber = input("Customer Contact Number: ");
-
-    if (!phoneNumber.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
-        console.log(`Phone Number must be in one of the following formats: \n(123) 456-7890\n(123)456 - 7890\n123 - 456 - 7890\n123.456.7890\n1234567890\n+ 31636363634\n075 - 63546725`)
-        getPhoneNumber()
+    let correct = false;
+    let phoneNumber;
+    while (!correct) {
+        phoneNumber = input("Customer Contact Number: ");
+        if (!phoneNumber.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+            console.log(`Phone Number must be in one of the following formats: \n(123) 456-7890\n(123)456 - 7890\n123 - 456 - 7890\n123.456.7890\n1234567890\n+ 31636363634\n075 - 63546725`)
+        } else {
+            correct = true;
+        }
     }
     return phoneNumber
-
 }
 
-var getDeposit = function () {
-    let deposit = input("Please select the amount you would like to deposit into this account($): ");
+let getDeposit = function () {
+    let correct = false;
+    let deposit;
+    while (!correct) {
+        deposit = input("Please select the amount you would like to deposit into this account($): ")
+        if (!deposit.match(/^\d*$/)) {
+            console.log(`Please enter numbers only`)
+        } else {
+            correct = true;
+        }
 
-    if (!deposit.match(/^\d*$/)) {
-        console.log(`Please enter numbers only`)
-        getDeposit()
     }
-    return deposit;
-
+    return deposit
 }
 

@@ -26,6 +26,7 @@ export const login = () => {
                     if (users[i].pin.match(pin)) {
                         console.log("Welcome to your page " + users[i].name)
                         loggedInUser[0] = users[i];
+                        transactionMenu()
                         break
                     }
                 }
@@ -43,7 +44,9 @@ export const newUser = () => {
 
     let address = input("Customer Address: ")
 
-    let phoneNumber = getPhoneNumber()
+    // let phoneNumber = getPhoneNumber()
+
+    let phoneNumber = input("Phone Number: ")
 
     let userId = input("User Id: ")
 
@@ -74,8 +77,6 @@ var getPin = function () {
 }
 
 
-
-
 var getName = function () {
     let correct = false;
     let name;
@@ -90,19 +91,19 @@ var getName = function () {
     return name
 }
 
-var getPhoneNumber = function () {
-    let correct = false;
-    let phoneNumber;
-    while (!correct) {
-        phoneNumber = input("Customer Contact Number: ");
-        if (!phoneNumber.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
-            console.log(`Phone Number must be in one of the following formats: \n(123) 456-7890\n(123)456 - 7890\n123 - 456 - 7890\n123.456.7890\n1234567890\n+ 31636363634\n075 - 63546725`)
-        } else {
-            correct = true;
-        }
-    }
-    return phoneNumber
-}
+// var getPhoneNumber = function () {
+//     let correct = false;
+//     let phoneNumber;
+//     while (!correct) {
+//         phoneNumber = input("Customer Contact Number: ");
+//         if (!phoneNumber.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+//             console.log(`Phone Number must be in one of the following formats: \n(123) 456-7890\n(123)456 - 7890\n123 - 456 - 7890\n123.456.7890\n1234567890\n+ 31636363634\n075 - 63546725`)
+//         } else {
+//             correct = true;
+//         }
+//     }
+//     return phoneNumber
+// }
 
 let getDeposit = function () {
     let correct = false;
@@ -114,7 +115,6 @@ let getDeposit = function () {
         } else {
             correct = true;
         }
-
     }
     return deposit
 }
@@ -122,11 +122,34 @@ let getDeposit = function () {
 
 
 export const printAccounts = () => {
-
     for (let i = 0; i < users.length; i++) {
         console.log(users[i]);
     }
+}
 
+export const transactionMenu = () => {
+    console.log(`
+   1: Account Balance Check
+   2: Print Transactions
+   3: Update PIN
+   4: Withdraw Amount
+   5: Deposit Amount
+     `)
+
+    let choice = input("Choose a number(1-5): ")
+
+    switch (parseInt(choice)) {
+        case 1: console.log("Account Balance Check")
+            break;
+        case 2: console.log("Print Transactions")
+            break
+        case 3: console.log("Update PIN")
+            break
+        case 4: console.log("Withdraw Amount")
+            break
+        case 5: console.log("Deposit Amount")
+            break
+    }
 }
 
 

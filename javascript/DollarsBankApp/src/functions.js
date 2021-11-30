@@ -15,6 +15,28 @@ export const mainMenu = () => {
         + "\n 3. Exit \n\n");
 }
 
+export const login = () => {
+    let correct = false;
+    while (!correct) {
+        let userId = input("UserId: ")
+        let password = input("Password: ")
+        try {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].userId.match(userId)) {
+                    if (users[i].password.match(password)) {
+                        console.log("Welcome to your page " + users[i].name)
+                        loggedInUser[0] = users[i];
+                        break
+                    }
+                }
+                console.log("Incorrect credentials, please try again.")
+            }
+        } catch (err) {
+            console.log(err)
+        } break
+    }
+}
+
 export const newUser = () => {
 
     var name = getName()
@@ -29,24 +51,13 @@ export const newUser = () => {
 
     let deposit = getDeposit()
 
-
-
     let account = new Account(name, address, phoneNumber, userId, password, deposit)
 
     users.push(account);
 
-}
-
-export const printAccounts = () => {
-
-    for (let i = 0; i < users.length; i++) {
-        console.log(users[i]);
-    }
+    console.log(users[0].userId)
 
 }
-
-
-
 
 var getPassword = function () {
     let correct = false;
@@ -79,10 +90,6 @@ var getName = function () {
     return name
 }
 
-
-
-
-
 var getPhoneNumber = function () {
     let correct = false;
     let phoneNumber;
@@ -111,4 +118,19 @@ let getDeposit = function () {
     }
     return deposit
 }
+
+
+
+export const printAccounts = () => {
+
+    for (let i = 0; i < users.length; i++) {
+        console.log(users[i]);
+    }
+
+}
+
+
+
+
+
 

@@ -19,7 +19,7 @@ export const login = () => {
     let correct = false;
     while (!correct) {
         let userId = input("UserId: ")
-        let pin = input("pin: ")
+        let pin = input("pin(4 digit number): ")
         try {
             for (let i = 0; i < users.length; i++) {
                 if (users[i].userId.match(userId)) {

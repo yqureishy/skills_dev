@@ -50,9 +50,7 @@ export const newUser = () => {
 
     let address = input("Customer Address: ")
 
-    // let phoneNumber = getPhoneNumber()
-
-    let phoneNumber = input("Phone Number: ")
+    let phoneNumber = getPhoneNumber()
 
     let userId = input("User Id: ")
 
@@ -110,19 +108,19 @@ var getName = function () {
     return name
 }
 
-// var getPhoneNumber = function () {
-//     let correct = false;
-//     let phoneNumber;
-//     while (!correct) {
-//         phoneNumber = input("Customer Contact Number: ");
-//         if (!phoneNumber.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
-//             console.log(`Phone Number must be in one of the following formats: \n(123) 456-7890\n(123)456 - 7890\n123 - 456 - 7890\n123.456.7890\n1234567890\n+ 31636363634\n075 - 63546725`)
-//         } else {
-//             correct = true;
-//         }
-//     }
-//     return phoneNumber
-// }
+var getPhoneNumber = function () {
+    let correct = false;
+    let phoneNumber;
+    while (!correct) {
+        phoneNumber = input("Customer Contact Number: ");
+        if (!phoneNumber.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+            console.log(`Phone Number must be in one of the following formats: \n(123) 456-7890\n(123)456 - 7890\n123 - 456 - 7890\n123.456.7890\n1234567890\n+ 31636363634\n075 - 63546725`)
+        } else {
+            correct = true;
+        }
+    }
+    return phoneNumber
+}
 
 let getDeposit = function () {
     let correct = false;

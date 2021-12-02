@@ -1,12 +1,14 @@
 import { isAlpha } from "class-validator";
 import ps from "prompt-sync";
-import Account from "./account.js"
+import { Account as Account, transactionClass as Transaction } from "./account.js"
 // const Account = require("./account.js")
 const input = ps({ sigint: true });
 
 let users = []
 
 let loggedInUser = []
+
+var d = new Date()
 
 export const mainMenu = () => {
     console.log("Please choose from the following menu: \n"
@@ -40,7 +42,11 @@ export const login = () => {
 
 export const newUser = () => {
 
-    var name = getName()
+    let transactions = []
+
+
+
+    let name = getName()
 
     let address = input("Customer Address: ")
 
@@ -54,11 +60,24 @@ export const newUser = () => {
 
     let deposit = getDeposit()
 
-    let account = new Account(name, address, phoneNumber, userId, pin, deposit)
+    let date = d.toString();
+
+    let balanceInitial = 0
+
+    let balanceAfter = deposit
+
+    let transaction = new Transaction(date, balanceInitial, balanceAfter)
+
+    transactions.push(transaction)
+
+    let account = new Account(name, address, phoneNumber, userId, pin, deposit, transactions)
+
+
 
     users.push(account);
 
-    console.log(users[0].userId)
+    console.log(users[0])
+
 
 }
 
@@ -109,11 +128,11 @@ let getDeposit = function () {
     let correct = false;
     let deposit;
     while (!correct) {
-        deposit = input("Please select the amount you would like to deposit into this account($): ")
-        if (!deposit.match(/^\d*$/)) {
-            console.log(`Please enter numbers only`)
-        } else {
+        deposit = input("Please select the amount you would like to deposit into this account($ 00.00): $")
+        if (deposit.match(/^\d+\.\d{0,3}$/)) {
             correct = true;
+        } else {
+            console.log(`Please enter numbers only in monetary format.`)
         }
     }
     return deposit
@@ -128,7 +147,10 @@ export const printAccounts = () => {
 }
 
 export const transactionMenu = () => {
-    console.log(`
+    let choice = 0;
+    while (choice != 6) {
+
+        console.log(`
    1: Account Balance Check
    2: Print Transactions
    3: Update PIN
@@ -136,20 +158,122 @@ export const transactionMenu = () => {
    5: Deposit Amount
      `)
 
-    let choice = input("Choose a number(1-5): ")
+        let choice = input("Choose a number(1-6): ")
 
-    switch (parseInt(choice)) {
-        case 1: console.log("Account Balance Check")
-            break;
-        case 2: console.log("Print Transactions")
-            break
-        case 3: console.log("Update PIN")
-            break
-        case 4: console.log("Withdraw Amount")
-            break
-        case 5: console.log("Deposit Amount")
-            break
+        switch (parseInt(choice)) {
+            case 1: accountBalance()
+                break;
+            case 2: console.log("Print Transactions")
+                break
+            case 3: updatePin()
+                break
+            case 4: withdraw()
+                break;
+            case 5: deposit()
+                break
+            case 6: console.log("Sign Out")
+                break
+        }
     }
+}
+
+const accountBalance = () => {
+    console.log("Your account balance is: $" + loggedInUser[0].deposit)
+
+    let anyKey = input("Press any key and hit enter for transaction menu: ");
+
+}
+
+const updatePin = () => {
+
+    let correct = false;
+    while (!correct) {
+        let oldPin = input("Enter your current pin: ")
+        if (oldPin.match(loggedInUser[0].pin)) {
+            console.log("Please enter new pin: ")
+            let newPin = getPin()
+            loggedInUser[0].pin = newPin
+            console.log("Your new pin has been updated. Thank you.")
+            console.log(loggedInUser[0])
+            correct = true;
+        }
+        else {
+            console.log("The pin you entered is incorrect, please try again: ")
+        }
+    }
+}
+
+const withdraw = () => {
+    let incorrect = true
+
+    while (incorrect) {
+        console.log("Current balance: " + loggedInUser[0].deposit)
+        let withdrawAmount = input("Please enter the amount you would like to withdraw: ")
+
+        if (withdrawAmount < loggedInUser[0].deposit) {
+            incorrect = false
+            let remainingBalance = loggedInUser[0].deposit - parseInt(withdrawAmount)
+            let transaction = new Transaction(d.toString(), loggedInUser[0].deposit, remainingBalance)
+            loggedInUser[0].deposit = remainingBalance
+            loggedInUser[0].transactions.push(transaction);
+            incorrect = false
+        }
+
+        else if (!withdrawAmount.match(/^\d +\.\d{ 0, 3}$/)) {
+            console.log("Please enter withdraw amount in monetary format($00.00) ")
+        }
+        else if (loggedInUser[0].deposit - withdrawAmount < 0) {
+
+            console.log("Insufficient funds. The amount you withdrew is greater than your current balance. Please try again.")
+
+        }
+    }
+}
+
+// let getDeposit = function () {
+//     let correct = false;
+//     let deposit;
+//     while (!correct) {
+//         deposit = input("Please select the amount you would like to deposit into this account($ 00.00): $")
+//         if (deposit.match(/^\s*-?(\d+(\.\d{1,2})?|\.\d{1,2})\s*$/)) {
+//             correct = true;
+//         } else {
+//             console.log(`Please enter numbers only in monetary format.`)
+//         }
+//     }
+//     return deposit
+// }
+
+
+const deposit = () => {
+    let correct = false;
+    while (!correct) {
+        console.log("Current balance: " + loggedInUser[0].deposit)
+        let depositAmount = input("Please enter the amount you would like to deposit: ")
+
+        if (!depositAmount.match(/^\d+\.\d{0,3}$/)) {
+
+            console.log("Please enter withdraw amount in monetary format($00.00): ")
+        }
+
+
+        else {
+
+            if (depositAmount < 0) {
+                console.log("You cannot deposit a negative amount. Please try again.")
+            }
+            else if (depositAmount > 0) {
+                let updatedBalance = loggedInUser[0].deposit + parseInt(depositAmount)
+                let transaction = new Transaction(d.toString(), loggedInUser[0].deposit, updatedBalance)
+                loggedInUser[0].deposit = updatedBalance
+                loggedInUser[0].transactions.push(transaction);
+                correct = true
+
+            }
+
+        }
+    }
+
 }
 
 

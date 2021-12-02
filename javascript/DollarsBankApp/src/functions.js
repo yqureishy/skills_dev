@@ -171,7 +171,7 @@ export const transactionMenu = () => {
                 break;
             case 5: deposit()
                 break
-            case 6: console.log("Sign Out")
+            case 6: signout()
                 break
         }
     }
@@ -275,6 +275,29 @@ const deposit = () => {
     }
 
 }
+
+const signout = () => {
+    let answer = "."
+    while (answer != "y" || answer != "n") {
+
+        answer = input("Are you sure you want to sign out ? (y / n)")
+
+        if (answer == "y") {
+            loggedInUser[0] = null;
+            break;
+        }
+        else if (answer == "n") {
+            transactionMenu()
+        }
+        else {
+            console.log("Please type 'y' or 'n'.")
+        }
+    }
+
+    answer = "y"
+
+}
+
 
 
 
